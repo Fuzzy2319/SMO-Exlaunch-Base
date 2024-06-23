@@ -7,4 +7,4 @@ clean:
 	rm -r build || true
 
 update-headers:
-	git submodule update --remote .\include\
+	git submodule update --remote ./include/
