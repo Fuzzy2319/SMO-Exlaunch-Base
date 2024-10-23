@@ -34,12 +34,6 @@ typedef	unsigned short	ushort;
 typedef	unsigned int	uint;	
 typedef	unsigned long	ulong;
 
-typedef unsigned char   undefined;
-typedef unsigned char    undefined1;
-typedef unsigned short    undefined2;
-typedef unsigned int    undefined3;
-typedef unsigned int    undefined4;
-typedef unsigned long    undefined8;
 
 #define ALIGN_UP(x, a) ((((uintptr_t)x) + (((uintptr_t)a)-1)) & ~(((uintptr_t)a)-1))
 #define ALIGN_DOWN(x, a) ((uintptr_t)(x) & ~(((uintptr_t)(a)) - 1))
@@ -47,54 +41,7 @@ typedef unsigned long    undefined8;
 #define ON_INIT         __attribute__((constructor))
 #define NOINLINE        __attribute__((noinline))
 #define NORETURN        __attribute__((noreturn))
-#define PACKED       __attribute__((packed))
 #define UNREACHABLE __builtin_unreachable()
 #define PAGE_SIZE (0x1000)
 #define ALWAYS_INLINE inline __attribute__((always_inline))
 #define BITSIZEOF(x) (sizeof(x) * CHAR_BIT)
-
-// from: https://www.scs.stanford.edu/~dm/blog/va-opt.html
-
-// Rescan macro tokens 256 times
-#define EXPAND(...) EXPAND1(EXPAND1(EXPAND1(EXPAND1(__VA_ARGS__))))
-#define EXPAND1(...) EXPAND2(EXPAND2(EXPAND2(EXPAND2(__VA_ARGS__))))
-#define EXPAND2(...) EXPAND3(EXPAND3(EXPAND3(EXPAND3(__VA_ARGS__))))
-#define EXPAND3(...) EXPAND4(EXPAND4(EXPAND4(EXPAND4(__VA_ARGS__))))
-#define EXPAND4(...) __VA_ARGS__
-
-#define PARENS ()
-
-#define FOR_EACH(macro, ...)                                    \
-  __VA_OPT__(EXPAND(FOR_EACH_HELPER(macro, __VA_ARGS__)))
-#define FOR_EACH_HELPER(macro, a1, ...)                         \
-  macro(a1)                                                     \
-  __VA_OPT__(FOR_EACH_AGAIN PARENS (macro, __VA_ARGS__))
-#define FOR_EACH_AGAIN() FOR_EACH_HELPER
-
-typedef __builtin_va_list va_list;
-#define va_start(v,l) __builtin_va_start(v,l)
-#define va_end(v) __builtin_va_end(v)
-
-#define RAD(deg) (deg * (M_PI / 180)) // converts Degrees to Radians
-#define DEG(rad) (rad * (180 / M_PI)) // converts Radians to Degrees
-#define BTOC(bool) (bool ? "true" : "false") // converts boolean to true/false char
-#define ACNT(arr) (sizeof(arr) / sizeof(arr[0]))  // returns size of inputted array
-// used to convert macro values to strings
-#define STRINGIFY(x) #x
-#define TOSTRING(x) STRINGIFY(x)
-
-//using u64 = std::uint64_t;
-//using s64 = std::int64_t;
-
-// stores a result on a lot of OS-related functions
-typedef u32 Result;
-typedef u32 Handle;
-typedef void (*ThreadFunc)(void*);
-
-// socket types
-
-typedef uint16_t in_port_t;
-typedef uint32_t in_addr_t;
-typedef uint16_t sa_family_t;
-
-typedef unsigned int socklen_t;

@@ -1,20 +1,18 @@
 #pragma once
 
-#include <nn/ro.h>
-
-#include <functional>
 #include "base.hpp"
 #include "util/func_ptrs.hpp"
+#include <functional>
 
 #define HOOK_DEFINE_TRAMPOLINE(name)                        \
 struct name : public ::exl::hook::impl::TrampolineHook<name>
 
 namespace exl::hook::impl {
 
-    template <typename Derived>
+    template<typename Derived>
     class TrampolineHook {
-
-        template <typename T = Derived>
+            
+        template<typename T = Derived>
         using CallbackFuncPtr = decltype(&T::Callback);
 
         static ALWAYS_INLINE auto& OrigRef() {
@@ -25,9 +23,9 @@ namespace exl::hook::impl {
             return s_FnPtr;
         }
 
-    public:
-        template <typename... Args>
-        static ALWAYS_INLINE decltype(auto) Orig(Args&&... args) {
+        public:
+        template<typename... Args>
+        static ALWAYS_INLINE decltype(auto) Orig(Args &&... args) {
             _HOOK_STATIC_CALLBACK_ASSERT();
 
             return OrigRef()(std::forward<Args>(args)...);
@@ -39,7 +37,7 @@ namespace exl::hook::impl {
             OrigRef() = hook::Hook(util::modules::GetTargetStart() + address, Derived::Callback, true);
         }
 
-        template <typename R, typename... A>
+        template<typename R, typename ...A>
         static ALWAYS_INLINE void InstallAtFuncPtr(util::GenericFuncPtr<R, A...> ptr) {
             _HOOK_STATIC_CALLBACK_ASSERT();
             using ArgFuncPtr = decltype(ptr);
@@ -51,17 +49,8 @@ namespace exl::hook::impl {
 
         static ALWAYS_INLINE void InstallAtPtr(uintptr_t ptr) {
             _HOOK_STATIC_CALLBACK_ASSERT();
-
+            
             OrigRef() = hook::Hook(ptr, Derived::Callback, true);
-        }
-
-        static ALWAYS_INLINE void InstallAtSymbol(const char* sym) {
-            _HOOK_STATIC_CALLBACK_ASSERT();
-
-            uintptr_t address = 0;
-            R_ABORT_UNLESS(nn::ro::LookupSymbol(&address, sym).GetInnerValueForDebug());
-
-            OrigRef() = hook::Hook(address, Derived::Callback, true);
         }
     };
 

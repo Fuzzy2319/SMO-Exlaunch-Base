@@ -1,7 +1,5 @@
 #pragma once
 
-#include <nn/ro.h>
-
 #include "base.hpp"
 #include "util/func_ptrs.hpp"
 
@@ -10,10 +8,10 @@ struct name : public ::exl::hook::impl::ReplaceHook<name>
 
 namespace exl::hook::impl {
 
-    template <typename Derived>
+    template<typename Derived>
     struct ReplaceHook {
 
-        template <typename T = Derived>
+        template<typename T = Derived>
         using CallbackFuncPtr = decltype(&T::Callback);
 
         static ALWAYS_INLINE void InstallAtOffset(ptrdiff_t address) {
@@ -22,7 +20,7 @@ namespace exl::hook::impl {
             hook::Hook(util::modules::GetTargetStart() + address, Derived::Callback);
         }
 
-        template <typename R, typename... A>
+        template<typename R, typename ...A>
         static ALWAYS_INLINE void InstallAtFuncPtr(util::GenericFuncPtr<R, A...> ptr) {
             _HOOK_STATIC_CALLBACK_ASSERT();
 
@@ -34,17 +32,8 @@ namespace exl::hook::impl {
 
         static ALWAYS_INLINE void InstallAtPtr(uintptr_t ptr) {
             _HOOK_STATIC_CALLBACK_ASSERT();
-
+            
             hook::Hook(ptr, Derived::Callback);
-        }
-
-        static ALWAYS_INLINE void InstallAtSymbol(const char* sym) {
-            _HOOK_STATIC_CALLBACK_ASSERT();
-
-            uintptr_t address = 0;
-            R_ABORT_UNLESS(nn::ro::LookupSymbol(&address, sym).IsFailure());
-
-            hook::Hook(address, Derived::Callback);
         }
     };
 
