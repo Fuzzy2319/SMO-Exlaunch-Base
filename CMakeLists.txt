@@ -6,7 +6,7 @@ if (NOT SWITCH)
     message(FATAL_ERROR "Not targeting switch, make sure to specify -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain.cmake")
 endif ()
 
-set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD 23)
 set(CMAKE_CXX_STANDARD 23)
 
 ## Title Id

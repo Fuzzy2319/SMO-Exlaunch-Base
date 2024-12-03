@@ -13,16 +13,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #pragma once
 
-#include "common.hpp"
-#include "assert.hpp"
+#include <cstdarg>
 
 namespace exl::diag {
 
-    struct AbortCtx {
-        u64 m_Value;
-        AbortInfo m_Info;
+    struct LogMessage {
+        const char *fmt;
+        std::va_list *vl;
     };
-};
+
+}

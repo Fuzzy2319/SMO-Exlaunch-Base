@@ -1,8 +1,6 @@
-#include <lib.hpp>
-
-using namespace exl::hook::impl;
+#include <exlaunch.hpp>
 
 extern "C" void exl_main(void* x0, void* x1) {
-    /* Setup hooking enviroment. */
+    /* Setup hooking environment. */
     exl::hook::Initialize();
 }
