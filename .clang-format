@@ -70,8 +70,12 @@ SpacesInContainerLiterals: true
 SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
-Standard: c++17
+Standard: Latest
 TabWidth: 4
 UseTab: Never
 WhitespaceSensitiveMacros: [ "SEAD_ENUM", "SEAD_ENUM_EX", "SEAD_ENUM_EX_VALUES" ]
+Macros:
+  - 'HOOK_DEFINE_TRAMPOLINE(name) = struct name: public ::exl::hook::impl::TrampolineHook<name>'
+  - 'HOOK_DEFINE_REPLACE(name) = struct name: public ::exl::hook::impl::ReplaceHook<name>'
+  - 'HOOK_DEFINE_INLINE(name) = struct name: public ::exl::hook::impl::InlineHook<name>'
 ...
