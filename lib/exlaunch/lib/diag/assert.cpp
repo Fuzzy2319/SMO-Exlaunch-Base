@@ -194,4 +194,8 @@ void OnAssertionFailure(AssertionType type, const char* expr, const char* func, 
                         int line) {
     return OnAssertionFailure(type, expr, func, file, line, "");
 }
+
+extern "C" void exl_abort(Result result) {
+    R_ABORT_UNLESS(result);
+}
 }  // namespace exl::diag

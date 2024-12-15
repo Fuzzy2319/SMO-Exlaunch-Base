@@ -59,7 +59,14 @@ auto Hook(MemberFuncPtr hook, typename util::FuncPtrTraits<MemberFuncPtr>::CPtr 
 using InlineCtx = arch::InlineCtx;
 using InlineCallback = util::CFuncPtr<void, InlineCtx*>;
 
+using InlineFloatCtx = arch::InlineFloatCtx;
+using InlineFloatCallback = util::CFuncPtr<void, InlineFloatCtx*>;
+
 inline void HookInline(uintptr_t hook, InlineCallback callback) {
-    arch::HookInline(hook, reinterpret_cast<uintptr_t>(callback));
+    arch::HookInline(hook, reinterpret_cast<uintptr_t>(callback), false);
+}
+
+inline void HookInline(uintptr_t hook, InlineFloatCallback callback) {
+    arch::HookInline(hook, reinterpret_cast<uintptr_t>(callback), true);
 }
 }  // namespace exl::hook
