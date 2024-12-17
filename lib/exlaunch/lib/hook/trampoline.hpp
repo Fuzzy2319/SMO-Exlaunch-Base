@@ -30,6 +30,11 @@ public:
         return OrigRef()(std::forward<Args>(args)...);
     }
 
+    static ALWAYS_INLINE void InstallAtOffset(ptrdiff_t address) {
+        _HOOK_STATIC_CALLBACK_ASSERT();
+        OrigRef() = hook::Hook(util::modules::GetTargetStart() + address, Derived::Callback, true);
+    }
+
     template <typename T>
     static ALWAYS_INLINE void InstallAtFuncPtr(T ptr) {
         _HOOK_STATIC_CALLBACK_ASSERT();

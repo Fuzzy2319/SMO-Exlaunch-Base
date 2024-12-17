@@ -2,12 +2,12 @@
 
 #include <common.hpp>
 
-#define EXL_MODULE_NAME "exlaunch"
+#define EXL_MODULE_NAME "SMO Base"
 
 #define EXL_DEBUG
-#define EXL_USE_FAKEHEAP
 
 /*
+#define EXL_USE_FAKEHEAP
 #define EXL_SUPPORTS_REBOOTPAYLOAD
 */
 
