@@ -6,9 +6,10 @@
 #include <functional>
 #include <ranges>
 #include <tuple>
-#include <version.hpp>
 #include "table/lookup.hpp"
 #include "table/lookup_entry.hpp"
+#include "table/table.hpp"
+#include "table/table_set.hpp"
 
 namespace exl::reloc {
 

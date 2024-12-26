@@ -6,34 +6,34 @@
 #include "lookup_entry.hpp"
 
 namespace exl::reloc {
-    
-    /* TODO: organize this to be a bit more flexible... */
-    struct Lookup {
-        NON_COPYABLE(Lookup);
-        NON_MOVEABLE(Lookup);
 
-        std::span<const LookupEntryBin> m_Entries;
+/* TODO: organize this to be a bit more flexible... */
+struct Lookup {
+    NON_COPYABLE(Lookup);
+    NON_MOVEABLE(Lookup);
 
-        Lookup() = default;
+    std::span<const LookupEntryBin> m_Entries;
 
-        ALWAYS_INLINE const auto& GetEntries() const {
-            return m_Entries;
-        }
+    Lookup() = default;
 
-        inline constexpr const LookupEntryBin* FindByHash(HashType hash) const {
-            auto low = std::lower_bound(m_Entries.begin(), m_Entries.end(), hash);
+    Lookup(std::span<const LookupEntryBin> entries) : m_Entries(entries) {}
 
-            if(low->m_SymbolHash != hash)
-                return nullptr;
+    ALWAYS_INLINE const auto& GetEntries() const { return m_Entries; }
 
-            return low.base();
-        }
+    inline constexpr const LookupEntryBin* FindByHash(HashType hash) const {
+        auto low = std::lower_bound(m_Entries.begin(), m_Entries.end(), hash);
 
-        inline const LookupEntryBin* FindByName(std::string_view string) const {
-            auto hash = util::Murmur3::Compute(std::span { string.data(), string.size() });
-            return FindByHash(hash);
-        }
-        
-        void Apply() const;
-    };
-}
+        if (low->m_SymbolHash != hash)
+            return nullptr;
+
+        return low.base();
+    }
+
+    inline const LookupEntryBin* FindByName(std::string_view string) const {
+        auto hash = util::Murmur3::Compute(std::span{string.data(), string.size()});
+        return FindByHash(hash);
+    }
+
+    void Apply() const;
+};
+}  // namespace exl::reloc
