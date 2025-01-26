@@ -24,13 +24,9 @@
 #include "lib/result.hpp"
 
 #include <stdfloat>
-#include <string>
 
 using f16 = std::float16_t;
 using f128 = std::float128_t;
-
-#define STRINGIFY(str) std::string(EXPEND_STRINGIFY(str)) +
-#define EXPEND_STRINGIFY(str) #str
 
 #define APPEND_IMPL(x, y) x##y
 #define APPEND(x, y) APPEND_IMPL(x, y)
