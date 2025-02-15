@@ -20,18 +20,22 @@ add_compile_definitions(EXL_PROGRAM_ID=${CONFIG_TITLE_ID} NNSDK=1)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/module/${SUBSDKX}.json.template ${CMAKE_CURRENT_BINARY_DIR}/${SUBSDKX}.json)
 
 ## Libraries
-include_directories(${PROJECT_SOURCE_DIR}/lib/exlaunch)
-include_directories(${PROJECT_SOURCE_DIR}/lib/exlaunch/lib)
+include_directories(
+        ${PROJECT_SOURCE_DIR}/lib/exlaunch
+        ${PROJECT_SOURCE_DIR}/lib/exlaunch/lib
+)
 
 #include_directories(${PROJECT_SOURCE_DIR}/lib/example) # Add your lib directory here
 
 ## Game headers
-include_directories(${PROJECT_SOURCE_DIR}/include/aarch64)
-include_directories(${PROJECT_SOURCE_DIR}/include/agl)
-include_directories(${PROJECT_SOURCE_DIR}/include/al)
-include_directories(${PROJECT_SOURCE_DIR}/include/game)
-include_directories(${PROJECT_SOURCE_DIR}/include/sead)
-include_directories(${PROJECT_SOURCE_DIR}/include/NintendoSDK)
+include_directories(
+        ${PROJECT_SOURCE_DIR}/include/aarch64
+        ${PROJECT_SOURCE_DIR}/include/agl
+        ${PROJECT_SOURCE_DIR}/include/al
+        ${PROJECT_SOURCE_DIR}/include/game
+        ${PROJECT_SOURCE_DIR}/include/sead
+        ${PROJECT_SOURCE_DIR}/include/NintendoSDK
+)
 
 ## Project sources
 include_directories(${PROJECT_SOURCE_DIR}/src)
