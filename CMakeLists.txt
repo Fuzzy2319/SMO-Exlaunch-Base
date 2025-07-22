@@ -19,6 +19,9 @@ set(SUBSDKX subsdk9)
 add_compile_definitions(EXL_PROGRAM_ID=${CONFIG_TITLE_ID} NNSDK=1)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/module/${SUBSDKX}.json.template ${CMAKE_CURRENT_BINARY_DIR}/${SUBSDKX}.json)
 
+## System
+include_directories(SYSTEM ${LIBNX}/include)
+
 ## Libraries
 include_directories(
         ${PROJECT_SOURCE_DIR}/lib/exlaunch

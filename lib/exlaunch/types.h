@@ -37,6 +37,7 @@ typedef unsigned long ulong;
 typedef float f32;
 typedef double f64;
 
+#define in_addr in_addr_t
 #define ALIGN_UP(x, a) ((((uintptr_t)x) + (((uintptr_t)a) - 1)) & ~(((uintptr_t)a) - 1))
 #define ALIGN_DOWN(x, a) ((uintptr_t)(x) & ~(((uintptr_t)(a)) - 1))
 #define ALIGNED(a) __attribute__((aligned(a)))

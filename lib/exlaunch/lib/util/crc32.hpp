@@ -1,9 +1,10 @@
 #pragma once
 
 #include <array>
-#include <type_traits>
 #include <cstddef>
 #include <numeric>
+#include <span>
+#include <type_traits>
 
 namespace exl::util {
     /* TODO: Probably support other CRC sizes? Maybe an API change? */
