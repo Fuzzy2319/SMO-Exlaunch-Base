@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(subsdk CXX C ASM)
+project(SMO-Exlaunch-Base CXX C ASM)
 
 ## Error if not using switch toolchain file
 if (NOT SWITCH)
@@ -42,10 +42,10 @@ include_directories(
 
 ## Project sources
 include_directories(${PROJECT_SOURCE_DIR}/src)
-file(GLOB_RECURSE SOURCES_ASM ${PROJECT_SOURCE_DIR}/src/*.s ${PROJECT_SOURCE_DIR}/lib/*.s)
-file(GLOB_RECURSE SOURCES_H ${PROJECT_SOURCE_DIR}/src/*.h ${PROJECT_SOURCE_DIR}/src/*.hpp ${PROJECT_SOURCE_DIR}/lib/*.h ${PROJECT_SOURCE_DIR}/lib/*.hpp)
-file(GLOB_RECURSE SOURCES_CXX ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/*.c ${PROJECT_SOURCE_DIR}/lib/*.cpp ${PROJECT_SOURCE_DIR}/lib/*.c)
-file(GLOB_RECURSE LOCAL_LIBRARIES ${PROJECT_SOURCE_DIR}/lib/*.a)
+file(GLOB_RECURSE SOURCES_ASM CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/src/*.s ${PROJECT_SOURCE_DIR}/lib/*.s)
+file(GLOB_RECURSE SOURCES_H CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/src/*.h ${PROJECT_SOURCE_DIR}/src/*.hpp ${PROJECT_SOURCE_DIR}/lib/*.h ${PROJECT_SOURCE_DIR}/lib/*.hpp)
+file(GLOB_RECURSE SOURCES_CXX CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/*.c ${PROJECT_SOURCE_DIR}/lib/*.cpp ${PROJECT_SOURCE_DIR}/lib/*.c)
+file(GLOB_RECURSE LOCAL_LIBRARIES CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/lib/*.a)
 
 ## Include nx tools
 include(${CMAKE_SOURCE_DIR}/cmake/SwitchTools.cmake)
