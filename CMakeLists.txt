@@ -32,7 +32,6 @@ include_directories(
 
 ## Game headers
 include_directories(
-        ${PROJECT_SOURCE_DIR}/include/aarch64
         ${PROJECT_SOURCE_DIR}/include/agl
         ${PROJECT_SOURCE_DIR}/include/al
         ${PROJECT_SOURCE_DIR}/include/game
