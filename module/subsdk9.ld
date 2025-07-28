@@ -12,7 +12,7 @@ PHDRS
 
 SECTIONS
 {
-  PROVIDE(__start__ = 0x0);
+  PROVIDE_HIDDEN(__start__ = 0x0);
   . = __start__;
   __code_start__ = .;
 
