@@ -1,7 +1,10 @@
-.PHONY: all clean
+.PHONY: all clean update-headers
 
-all:
-	cmake --toolchain=cmake/toolchain.cmake -S . -B build && $(MAKE) -C build subsdk9_meta
+all: configure
+	cmake --build build -j$(shell nproc)
+
+configure:
+	cmake --toolchain=cmake/toolchain.cmake -S . -B build
 
 clean:
 	-rm -r build

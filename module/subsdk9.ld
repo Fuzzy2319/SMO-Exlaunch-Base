@@ -73,7 +73,7 @@ SECTIONS
   } :rodata
   .eh_frame : { KEEP (*(.eh_frame)) } :rodata
 
-  /* Misc .rodata stuffs (build-id, ect) */
+  /* Misc .rodata stuffs (build-id, etc.) */
   .note.gnu.build-id : { *(.note.gnu.build-id) } :rodata
 
   /* Read-write sections */
@@ -112,25 +112,25 @@ SECTIONS
 
   .preinit_array ALIGN(8) :
   {
-    PROVIDE (__preinit_array_start = .);
+    PROVIDE_HIDDEN (__preinit_array_start = .);
     KEEP (*(.preinit_array))
-    PROVIDE (__preinit_array_end = .);
+    PROVIDE_HIDDEN (__preinit_array_end = .);
   } :data
 
   /* App init array */
   .init_array : {
-    PROVIDE (__init_array_start = .);
+    PROVIDE_HIDDEN (__init_array_start = .);
     KEEP (*(SORT_BY_INIT_PRIORITY(.init_array.*)))
     KEEP (*(.init_array))
-    PROVIDE (__init_array_end  = .);
+    PROVIDE_HIDDEN (__init_array_end  = .);
   } :data
 
   /* App fini array */
   .fini_array : {
-    PROVIDE (__fini_array_start__ = .);
+    PROVIDE_HIDDEN (__fini_array_start__ = .);
     KEEP (*(SORT_BY_INIT_PRIORITY(.fini_array.*)))
     KEEP (*(.fini_array))
-    PROVIDE (__fini_array_end__ = .);
+    PROVIDE_HIDDEN (__fini_array_end__ = .);
   } :data
 
   /* Thread Local sections */
