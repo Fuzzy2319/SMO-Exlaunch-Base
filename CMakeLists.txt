@@ -42,7 +42,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 ## ${SUBSDKX}
 set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-#set_source_files_properties(${SOURCES_CXX} PROPERTIES LANGUAGE CXX)
 add_executable(${SUBSDKX})
 add_compile_definitions(EXL_LOAD_KIND=Module EXL_LOAD_KIND_ENUM=EXL_LOAD_KIND_MODULE)
 
@@ -78,9 +77,6 @@ target_sources(${SUBSDKX}
         PRIVATE ${SOURCES_H}
         PRIVATE ${SOURCES_CXX}
 )
-
-# generate header file for imgui shader binary
-# target_embed_binaries(${SUBSDKX} "${PROJECT_SOURCE_DIR}/imgui.bin")
 
 ## Prepare subsdk ld
 set(SUBSDK_LD_PATH ${CMAKE_CURRENT_SOURCE_DIR}/module/${SUBSDKX}.ld)
