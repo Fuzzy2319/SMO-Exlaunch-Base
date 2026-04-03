@@ -10,37 +10,25 @@ set(CMAKE_C_STANDARD 23)
 set(CMAKE_CXX_STANDARD 23)
 
 ## Title Id
-set(TITLE_ID 0100000000010000)
-set(CONFIG_TITLE_ID 0x${TITLE_ID})
+set(CONFIG_TITLE_ID 0x0100000000010000)
 
 ## Target subsdk
 set(SUBSDKX subsdk9)
 
-add_compile_definitions(EXL_PROGRAM_ID=${CONFIG_TITLE_ID} NNSDK=1)
+add_compile_definitions(
+        EXL_PROGRAM_ID=${CONFIG_TITLE_ID}
+        NNSDK
+        NN_SDK_MAJOR=3
+        NN_SDK_MINOR=5
+        NN_SDK_PATCH=1
+        NN_WARE_MAJOR=3
+        NN_WARE_MINOR=5
+        NN_WARE_PATCH=1
+        SEAD_VERSION=SEAD_VERSION_SMO
+)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/module/${SUBSDKX}.json.template ${CMAKE_CURRENT_BINARY_DIR}/${SUBSDKX}.json)
 
-## System
-include_directories(SYSTEM ${LIBNX}/include)
-
-## Libraries
-include_directories(
-        ${PROJECT_SOURCE_DIR}/lib/exlaunch
-        ${PROJECT_SOURCE_DIR}/lib/exlaunch/lib
-)
-
-#include_directories(${PROJECT_SOURCE_DIR}/lib/example) # Add your lib directory here
-
-## Game headers
-include_directories(
-        ${PROJECT_SOURCE_DIR}/include/agl
-        ${PROJECT_SOURCE_DIR}/include/al
-        ${PROJECT_SOURCE_DIR}/include/game
-        ${PROJECT_SOURCE_DIR}/include/sead
-        ${PROJECT_SOURCE_DIR}/include/NintendoSDK
-)
-
 ## Project sources
-include_directories(${PROJECT_SOURCE_DIR}/src)
 file(GLOB_RECURSE SOURCES_ASM CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/src/*.s ${PROJECT_SOURCE_DIR}/lib/*.s)
 file(GLOB_RECURSE SOURCES_H CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/src/*.h ${PROJECT_SOURCE_DIR}/src/*.hpp ${PROJECT_SOURCE_DIR}/lib/*.h ${PROJECT_SOURCE_DIR}/lib/*.hpp ${PROJECT_SOURCE_DIR}/include/*.h ${PROJECT_SOURCE_DIR}/include/*.hpp)
 file(GLOB_RECURSE SOURCES_CXX CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/*.c ${PROJECT_SOURCE_DIR}/lib/*.cpp ${PROJECT_SOURCE_DIR}/lib/*.c)
@@ -55,9 +43,41 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 #set_source_files_properties(${SOURCES_CXX} PROPERTIES LANGUAGE CXX)
-add_executable(${SUBSDKX} ${SOURCES_ASM} ${SOURCES_C} ${SOURCES_H} ${SOURCES_CXX} ${IMGUI_SOURCES})
+add_executable(${SUBSDKX})
 add_compile_definitions(EXL_LOAD_KIND=Module EXL_LOAD_KIND_ENUM=EXL_LOAD_KIND_MODULE)
+
 target_link_libraries(${SUBSDKX} ${LOCAL_LIBRARIES})
+
+## System
+target_include_directories(${SUBSDKX} SYSTEM PRIVATE ${LIBNX}/include)
+
+## Libraries
+target_include_directories(${SUBSDKX}
+        PRIVATE ${PROJECT_SOURCE_DIR}/lib/exlaunch
+        PRIVATE ${PROJECT_SOURCE_DIR}/lib/exlaunch/lib
+        #PRIVATE ${PROJECT_SOURCE_DIR}/lib/example # Add your lib directory here
+)
+
+## Game headers
+target_include_directories(${SUBSDKX}
+        PRIVATE ${PROJECT_SOURCE_DIR}/include/aarch64
+        PRIVATE ${PROJECT_SOURCE_DIR}/include/agl
+        PRIVATE ${PROJECT_SOURCE_DIR}/include/al
+        PRIVATE ${PROJECT_SOURCE_DIR}/include/game
+        PRIVATE ${PROJECT_SOURCE_DIR}/include/sead
+        PRIVATE ${PROJECT_SOURCE_DIR}/include/NintendoSDK
+        PRIVATE ${PROJECT_SOURCE_DIR}/include/NintendoSDK-NEX/RendezVous
+        PRIVATE ${PROJECT_SOURCE_DIR}/include/NintendoSDK-NEX/RendezVous/Core
+        PRIVATE ${PROJECT_SOURCE_DIR}/include/NintendoSDK-NEX/OnlineCore
+)
+
+## Project sources
+target_include_directories(${SUBSDKX} PRIVATE ${PROJECT_SOURCE_DIR}/src)
+target_sources(${SUBSDKX}
+        PRIVATE ${SOURCES_ASM}
+        PRIVATE ${SOURCES_H}
+        PRIVATE ${SOURCES_CXX}
+)
 
 # generate header file for imgui shader binary
 # target_embed_binaries(${SUBSDKX} "${PROJECT_SOURCE_DIR}/imgui.bin")
