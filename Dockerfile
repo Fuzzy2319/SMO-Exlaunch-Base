@@ -3,15 +3,12 @@ FROM alpine:latest
 WORKDIR /app
 
 # avoid errors/configuration issues while installing other packages
-ARG TZ=Europe/Paris
-ENV LANG=fr_FR.UTF-8
 ENV DEVKITPRO=/opt/devkitpro
-ENV DEVKITA64=/opt/devkitpro/devkitA64
 ENV PATH=/opt/devkitpro/tools/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN apk update
 RUN apk upgrade
-RUN apk add --no-cache tzdata pacman make cmake
+RUN apk add --no-cache pacman make cmake
 
 RUN echo -e "[dkp-libs]\nSigLevel = Optional TrustAll\nServer = https://pkg.devkitpro.org/packages" >> /etc/pacman.conf
 RUN echo -e "[dkp-linux-musl]\nSigLevel = Optional TrustAll\nServer = https://pkg.devkitpro.org/packages/linux-musl/\$arch/" >> /etc/pacman.conf
